@@ -1,0 +1,103 @@
+/* === Cores Base do Tema (Definidas via Classes Tailwind) === */
+/* Estas são referências, as cores reais são aplicadas via Tailwind no HTML */
+/* .bg-primary { background-color: #0A2342; } /* Deep Blue */
+/* .text-primary { color: #0A2342; } */
+/* .bg-secondary { background-color: #D4AF37; } /* Gold */
+/* .text-secondary { color: #D4AF37; } */
+/* .border-secondary { border-color: #D4AF37; } */
+/* .hover\:bg-secondary-dark:hover { background-color: #b89b30; } /* Darker Gold for hover */
+/* .hover\:text-primary-light:hover { color: #1e40af; } /* Lighter blue for hover */
+
+/* === Estilos Personalizados Globais === */
+html {
+    scroll-behavior: smooth; /* Rolagem suave para links de âncora */
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Aplica a fonte Inter globalmente */
+    -webkit-font-smoothing: antialiased; /* Melhora a renderização da fonte no WebKit */
+    -moz-osx-font-smoothing: grayscale; /* Melhora a renderização da fonte no Firefox */
+    /* Garante que o fundo base seja aplicado se o Tailwind não carregar imediatamente */
+    background-color: #f3f4f6; /* Equivalente a bg-gray-100 */
+}
+
+/* === Aprimoramentos Visuais === */
+.tool-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.5s ease-in-out; /* Adicionada transição de opacidade */
+    border-top-width: 4px; /* Garante que a borda superior exista */
+    /* As classes Tailwind 'bg-white', 'rounded-lg', 'shadow-lg', 'p-6', 'border-secondary' são aplicadas no HTML */
+}
+
+.tool-card:hover {
+    transform: translateY(-6px); /* Eleva o cartão ligeiramente */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06); /* Sombra mais pronunciada */
+}
+
+.section-title-underline {
+    display: inline-block; /* Permite que a borda fique apenas sob o texto */
+    border-bottom-width: 3px;
+    padding-bottom: 0.5rem; /* Espaçamento entre texto e linha */
+    margin-bottom: 2rem; /* Espaçamento após o título */
+     /* A classe Tailwind 'border-secondary' é aplicada no HTML */
+}
+
+.header-gradient {
+     background: linear-gradient(to right, #0A2342, #1a3a63); /* Gradiente de azul escuro para um pouco mais claro */
+     /* As classes Tailwind 'bg-primary', 'text-white', 'shadow-md' são aplicadas no HTML */
+}
+
+.btn-primary-cta {
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Adicionada transição de sombra */
+    /* A sombra específica é definida inline no HTML para variar a cor (dourada/azul) */
+    /* As classes Tailwind de cor, preenchimento, arredondamento, etc., são aplicadas no HTML */
+}
+
+.btn-primary-cta:hover {
+    transform: translateY(-2px); /* Pequeno efeito de elevação */
+    /* A sombra mais forte no hover pode ser adicionada aqui ou mantida inline no HTML */
+}
+
+.fa-icon-adjust {
+    vertical-align: -0.125em; /* Alinha melhor os ícones com o texto */
+}
+
+/* === Estilos para Animação de Scroll === */
+/* Estado inicial dos elementos a serem animados */
+.animate-on-scroll {
+    opacity: 0; /* Começa invisível */
+    transform: translateY(20px); /* Começa ligeiramente abaixo */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transição suave */
+}
+
+/* Estado visível (quando a classe 'is-visible' é adicionada via JS) */
+.animate-on-scroll.is-visible {
+    opacity: 1; /* Torna-se visível */
+    transform: translateY(0); /* Move para a posição original */
+}
+
+/* Atraso opcional para elementos aparecerem em sequência */
+.delay-100 { transition-delay: 0.1s !important; } /* Use !important se necessário para sobrescrever a transição base */
+.delay-200 { transition-delay: 0.2s !important; }
+.delay-300 { transition-delay: 0.3s !important; }
+.delay-400 { transition-delay: 0.4s !important; }
+
+/* Estilos adicionais para o menu móvel (se necessário, além do Tailwind) */
+/* Exemplo: feedback visual no botão do menu */
+#mobile-menu-button.active i {
+    /* color: #D4AF37; /* Muda a cor do ícone para dourado quando ativo */
+    transform: rotate(90deg); /* Gira o ícone */
+    transition: transform 0.3s ease;
+}
+#mobile-menu-button i {
+    transition: transform 0.3s ease; /* Transição suave para o estado normal */
+}
+
+/* Ajuste para o conteúdo principal devido ao cabeçalho fixo */
+/* A classe 'pt-20' do Tailwind já faz isso no HTML, mas pode ser feito aqui também */
+/*
+main {
+    padding-top: 5rem; /* Ajuste conforme a altura do seu cabeçalho
+}
+*/
+
+
