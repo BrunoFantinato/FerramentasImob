@@ -81,16 +81,16 @@
         }
 
         /* Atraso opcional para elementos aparecerem em sequência */
-        .delay-100 { transition-delay: 0.1s; }
-        .delay-200 { transition-delay: 0.2s; }
-        .delay-300 { transition-delay: 0.3s; }
-        .delay-400 { transition-delay: 0.4s; }
+        .delay-100 { transition-delay: 0.1s !important; } /* Use !important se necessário para sobrescrever a transição base */
+        .delay-200 { transition-delay: 0.2s !important; }
+        .delay-300 { transition-delay: 0.3s !important; }
+        .delay-400 { transition-delay: 0.4s !important; }
 
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <header class="bg-primary text-white shadow-md header-gradient sticky top-0 z-50"> {/* Adicionado sticky, top-0 e z-50 para cabeçalho fixo */}
+    <header class="bg-primary text-white shadow-md header-gradient sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div>
                 <a href="#" class="text-2xl font-bold text-secondary">
@@ -108,16 +108,15 @@
                 </button>
             </div>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden bg-primary pb-4 absolute w-full shadow-lg"> {/* Adicionado absolute e w-full */}
+        <div id="mobile-menu" class="hidden md:hidden bg-primary pb-4 absolute w-full shadow-lg">
             <a href="#tools" class="block px-6 py-2 text-gray-300 hover:bg-blue-700 hover:text-secondary transition duration-300">Ferramentas</a>
             <a href="#about" class="block px-6 py-2 text-gray-300 hover:bg-blue-700 hover:text-secondary transition duration-300">Sobre</a>
             <a href="#contact" class="block px-6 py-2 text-gray-300 hover:bg-blue-700 hover:text-secondary transition duration-300">Contato</a>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12 pt-20"> {/* Adicionado pt-20 para compensar o cabeçalho fixo */}
+    <main class="container mx-auto px-6 py-12 pt-20">
 
-        {/* Adicionada classe animate-on-scroll */}
         <section class="text-center mb-16 animate-on-scroll">
             <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Ferramentas Inteligentes para o Mercado Imobiliário</h1>
             <p class="text-lg text-gray-600 mb-8">Simplifique suas tarefas e otimize seus resultados com nossas soluções.</p>
@@ -125,11 +124,9 @@
         </section>
 
         <section id="tools" class="mb-16">
-             {/* Adicionada classe animate-on-scroll */}
-            <h2 class="text-3xl font-bold text-primary text-center border-secondary section-title-underline animate-on-scroll">Nossas Ferramentas</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-4"> {/* Adicionado pt-4 para espaço após o título */}
+             <h2 class="text-3xl font-bold text-primary text-center border-secondary section-title-underline animate-on-scroll">Nossas Ferramentas</h2>
+             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-4">
 
-                {/* Placeholder Tool Card 1 - Adicionadas classes animate-on-scroll e delay-100 */}
                 <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card animate-on-scroll delay-100">
                     <div class="text-secondary text-3xl mb-4"><i class="fas fa-calculator fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Calculadora de Financiamento</h3>
@@ -137,7 +134,6 @@
                     <a href="#" class="text-secondary font-medium hover:text-primary-light transition duration-300">Acessar Ferramenta &rarr;</a>
                 </div>
 
-                {/* Placeholder Tool Card 2 - Adicionadas classes animate-on-scroll e delay-200 */}
                 <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card animate-on-scroll delay-200">
                     <div class="text-secondary text-3xl mb-4"><i class="fas fa-chart-line fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Análise de Rentabilidade</h3>
@@ -145,7 +141,6 @@
                     <a href="#" class="text-secondary font-medium hover:text-primary-light transition duration-300">Acessar Ferramenta &rarr;</a>
                 </div>
 
-                {/* Placeholder Tool Card 3 - Adicionadas classes animate-on-scroll e delay-300 */}
                 <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card animate-on-scroll delay-300">
                     <div class="text-secondary text-3xl mb-4"><i class="fas fa-map-marked-alt fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Comparador de Imóveis</h3>
@@ -153,8 +148,7 @@
                     <a href="#" class="text-secondary font-medium hover:text-primary-light transition duration-300">Acessar Ferramenta &rarr;</a>
                 </div>
 
-                {/* Add more tool cards here as needed - Adicionadas classes animate-on-scroll e delay-400 */}
-                 <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card flex flex-col items-center justify-center text-center animate-on-scroll delay-400">
+                <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card flex flex-col items-center justify-center text-center animate-on-scroll delay-400">
                     <div class="text-gray-400 text-4xl mb-4"><i class="fas fa-plus-circle fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Sua Próxima Ferramenta</h3>
                     <p class="text-gray-600">Adicione aqui a descrição da sua nova ferramenta.</p>
@@ -164,7 +158,6 @@
             </div>
         </section>
 
-        {/* Adicionada classe animate-on-scroll */}
         <section id="about" class="bg-white rounded-lg shadow p-8 mb-16 animate-on-scroll">
             <h2 class="text-3xl font-bold text-primary mb-6 text-center">Sobre Nós</h2>
             <p class="text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
@@ -172,11 +165,10 @@
             </p>
         </section>
 
-        {/* Adicionada classe animate-on-scroll */}
         <section id="contact" class="text-center mb-16 animate-on-scroll">
              <h2 class="text-3xl font-bold text-primary mb-8">Entre em Contato</h2>
              <p class="text-gray-600 mb-6">Tem alguma sugestão ou dúvida? Adoraria ouvir você!</p>
-             <a href="mailto:seuemail@exemplo.com" class="bg-primary text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-900 transition duration-300 btn-primary-cta" style="box-shadow: 0 4px 6px rgba(10, 35, 66, 0.3);"> {/* Sombra azul */}
+             <a href="mailto:seuemail@exemplo.com" class="bg-primary text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-900 transition duration-300 btn-primary-cta" style="box-shadow: 0 4px 6px rgba(10, 35, 66, 0.3);">
                 Enviar E-mail <i class="fas fa-paper-plane ml-2 fa-icon-adjust"></i>
              </a>
         </section>
