@@ -10,10 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles for the gold/blue theme */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+        /* === Cores Base do Tema (Definidas via Classes Tailwind) === */
         .bg-primary { background-color: #0A2342; } /* Deep Blue */
         .text-primary { color: #0A2342; }
         .bg-secondary { background-color: #D4AF37; } /* Gold */
@@ -21,15 +18,83 @@
         .border-secondary { border-color: #D4AF37; }
         .hover\:bg-secondary-dark:hover { background-color: #b89b30; } /* Darker Gold for hover */
         .hover\:text-primary-light:hover { color: #1e40af; } /* Lighter blue for hover */
+
+        /* === Estilos Personalizados Globais === */
+        html {
+            scroll-behavior: smooth; /* Rolagem suave para links de âncora */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; /* Aplica a fonte Inter globalmente */
+            -webkit-font-smoothing: antialiased; /* Melhora a renderização da fonte no WebKit */
+            -moz-osx-font-smoothing: grayscale; /* Melhora a renderização da fonte no Firefox */
+        }
+
+        /* === Aprimoramentos Visuais === */
+        .tool-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.5s ease-in-out; /* Adicionada transição de opacidade */
+            border-top-width: 4px; /* Garante que a borda superior exista */
+        }
+
+        .tool-card:hover {
+            transform: translateY(-6px); /* Eleva o cartão ligeiramente */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06); /* Sombra mais pronunciada */
+        }
+
+        .section-title-underline {
+            display: inline-block; /* Permite que a borda fique apenas sob o texto */
+            border-bottom-width: 3px;
+            padding-bottom: 0.5rem; /* Espaçamento entre texto e linha */
+            margin-bottom: 2rem; /* Espaçamento após o título */
+        }
+
+        .header-gradient {
+             background: linear-gradient(to right, #0A2342, #1a3a63); /* Gradiente de azul escuro para um pouco mais claro */
+        }
+
+        .btn-primary-cta {
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Adicionada transição de sombra */
+            box-shadow: 0 4px 6px rgba(212, 175, 55, 0.3); /* Sombra sutil dourada */
+        }
+
+        .btn-primary-cta:hover {
+            transform: translateY(-2px); /* Pequeno efeito de elevação */
+            box-shadow: 0 6px 12px rgba(212, 175, 55, 0.4); /* Sombra mais forte no hover */
+        }
+
+        .fa-icon-adjust {
+            vertical-align: -0.125em; /* Alinha melhor os ícones com o texto */
+        }
+
+        /* === Estilos para Animação de Scroll === */
+        /* Estado inicial dos elementos a serem animados */
+        .animate-on-scroll {
+            opacity: 0; /* Começa invisível */
+            transform: translateY(20px); /* Começa ligeiramente abaixo */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transição suave */
+        }
+
+        /* Estado visível (quando a classe 'is-visible' é adicionada via JS) */
+        .animate-on-scroll.is-visible {
+            opacity: 1; /* Torna-se visível */
+            transform: translateY(0); /* Move para a posição original */
+        }
+
+        /* Atraso opcional para elementos aparecerem em sequência */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <header class="bg-primary text-white shadow-md">
+    <header class="bg-primary text-white shadow-md header-gradient sticky top-0 z-50"> {/* Adicionado sticky, top-0 e z-50 para cabeçalho fixo */}
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div>
                 <a href="#" class="text-2xl font-bold text-secondary">
-                  <i class="fas fa-tools mr-2"></i>Real Estate Tools
+                  <i class="fas fa-tools mr-2 fa-icon-adjust"></i>Real Estate Tools
                 </a>
             </div>
             <div class="hidden md:flex space-x-4">
@@ -43,84 +108,153 @@
                 </button>
             </div>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden bg-primary pb-4">
+        <div id="mobile-menu" class="hidden md:hidden bg-primary pb-4 absolute w-full shadow-lg"> {/* Adicionado absolute e w-full */}
             <a href="#tools" class="block px-6 py-2 text-gray-300 hover:bg-blue-700 hover:text-secondary transition duration-300">Ferramentas</a>
             <a href="#about" class="block px-6 py-2 text-gray-300 hover:bg-blue-700 hover:text-secondary transition duration-300">Sobre</a>
             <a href="#contact" class="block px-6 py-2 text-gray-300 hover:bg-blue-700 hover:text-secondary transition duration-300">Contato</a>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12">
+    <main class="container mx-auto px-6 py-12 pt-20"> {/* Adicionado pt-20 para compensar o cabeçalho fixo */}
 
-        <section class="text-center mb-16">
+        {/* Adicionada classe animate-on-scroll */}
+        <section class="text-center mb-16 animate-on-scroll">
             <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Ferramentas Inteligentes para o Mercado Imobiliário</h1>
             <p class="text-lg text-gray-600 mb-8">Simplifique suas tarefas e otimize seus resultados com nossas soluções.</p>
-            <a href="#tools" class="bg-secondary text-primary font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-secondary-dark transition duration-300">Ver Ferramentas</a>
+            <a href="#tools" class="bg-secondary text-primary font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-secondary-dark transition duration-300 btn-primary-cta">Ver Ferramentas</a>
         </section>
 
         <section id="tools" class="mb-16">
-            <h2 class="text-3xl font-bold text-primary mb-8 text-center border-b-2 border-secondary pb-2 inline-block mx-auto">Nossas Ferramentas</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+             {/* Adicionada classe animate-on-scroll */}
+            <h2 class="text-3xl font-bold text-primary text-center border-secondary section-title-underline animate-on-scroll">Nossas Ferramentas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-4"> {/* Adicionado pt-4 para espaço após o título */}
 
-                <div class="bg-white rounded-lg shadow-lg p-6 border-t-4 border-secondary transform hover:scale-105 transition duration-300">
-                    <div class="text-secondary text-3xl mb-4"><i class="fas fa-calculator"></i></div>
+                {/* Placeholder Tool Card 1 - Adicionadas classes animate-on-scroll e delay-100 */}
+                <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card animate-on-scroll delay-100">
+                    <div class="text-secondary text-3xl mb-4"><i class="fas fa-calculator fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Calculadora de Financiamento</h3>
                     <p class="text-gray-600 mb-4">Simule diferentes cenários de financiamento imobiliário de forma rápida e precisa.</p>
                     <a href="#" class="text-secondary font-medium hover:text-primary-light transition duration-300">Acessar Ferramenta &rarr;</a>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-lg p-6 border-t-4 border-secondary transform hover:scale-105 transition duration-300">
-                    <div class="text-secondary text-3xl mb-4"><i class="fas fa-chart-line"></i></div>
+                {/* Placeholder Tool Card 2 - Adicionadas classes animate-on-scroll e delay-200 */}
+                <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card animate-on-scroll delay-200">
+                    <div class="text-secondary text-3xl mb-4"><i class="fas fa-chart-line fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Análise de Rentabilidade</h3>
                     <p class="text-gray-600 mb-4">Avalie o potencial de retorno de investimentos em imóveis para locação.</p>
                     <a href="#" class="text-secondary font-medium hover:text-primary-light transition duration-300">Acessar Ferramenta &rarr;</a>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-lg p-6 border-t-4 border-secondary transform hover:scale-105 transition duration-300">
-                     <div class="text-secondary text-3xl mb-4"><i class="fas fa-map-marked-alt"></i></div>
+                {/* Placeholder Tool Card 3 - Adicionadas classes animate-on-scroll e delay-300 */}
+                <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card animate-on-scroll delay-300">
+                    <div class="text-secondary text-3xl mb-4"><i class="fas fa-map-marked-alt fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Comparador de Imóveis</h3>
                     <p class="text-gray-600 mb-4">Compare características e preços de imóveis em diferentes regiões.</p>
                     <a href="#" class="text-secondary font-medium hover:text-primary-light transition duration-300">Acessar Ferramenta &rarr;</a>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-lg p-6 border-t-4 border-secondary transform hover:scale-105 transition duration-300 flex flex-col items-center justify-center text-center">
-                    <div class="text-gray-400 text-4xl mb-4"><i class="fas fa-plus-circle"></i></div>
+                {/* Add more tool cards here as needed - Adicionadas classes animate-on-scroll e delay-400 */}
+                 <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card flex flex-col items-center justify-center text-center animate-on-scroll delay-400">
+                    <div class="text-gray-400 text-4xl mb-4"><i class="fas fa-plus-circle fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Sua Próxima Ferramenta</h3>
                     <p class="text-gray-600">Adicione aqui a descrição da sua nova ferramenta.</p>
+                     <a href="#" class="mt-4 text-secondary font-medium hover:text-primary-light transition duration-300">Adicionar &rarr;</a>
                 </div>
 
             </div>
         </section>
 
-        <section id="about" class="bg-white rounded-lg shadow p-8 mb-16">
+        {/* Adicionada classe animate-on-scroll */}
+        <section id="about" class="bg-white rounded-lg shadow p-8 mb-16 animate-on-scroll">
             <h2 class="text-3xl font-bold text-primary mb-6 text-center">Sobre Nós</h2>
             <p class="text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
                 Somos apaixonados por tecnologia e pelo mercado imobiliário. Nosso objetivo é criar ferramentas que facilitem o dia a dia de corretores, investidores e todos os envolvidos neste setor, trazendo mais eficiência e clareza para suas decisões. Aqui você encontrará as soluções que desenvolvo para otimizar processos e análises.
             </p>
         </section>
 
-        <section id="contact" class="text-center">
+        {/* Adicionada classe animate-on-scroll */}
+        <section id="contact" class="text-center mb-16 animate-on-scroll">
              <h2 class="text-3xl font-bold text-primary mb-8">Entre em Contato</h2>
              <p class="text-gray-600 mb-6">Tem alguma sugestão ou dúvida? Adoraria ouvir você!</p>
-             <a href="mailto:seuemail@exemplo.com" class="bg-primary text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-900 transition duration-300">
-                Enviar E-mail <i class="fas fa-paper-plane ml-2"></i>
+             <a href="mailto:seuemail@exemplo.com" class="bg-primary text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-900 transition duration-300 btn-primary-cta" style="box-shadow: 0 4px 6px rgba(10, 35, 66, 0.3);"> {/* Sombra azul */}
+                Enviar E-mail <i class="fas fa-paper-plane ml-2 fa-icon-adjust"></i>
              </a>
         </section>
 
     </main>
 
-    <footer class="bg-primary text-gray-400 mt-16 py-8 px-6 text-center">
+    <footer class="bg-primary text-gray-400 mt-16 py-8 px-6 text-center header-gradient">
         <p>&copy; 2024 Real Estate Tools. Todos os direitos reservados.</p>
-        <p>Desenvolvido com <i class="fas fa-heart text-secondary"></i> por [Seu Nome ou Empresa]</p>
+        <p>Desenvolvido com <i class="fas fa-heart text-secondary fa-icon-adjust"></i> por [Seu Nome ou Empresa]</p>
     </footer>
 
     <script>
+        // --- Mobile Menu Toggle ---
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
         menuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+            // Adiciona ou remove a classe 'active' ao botão para feedback visual (opcional)
+            menuButton.classList.toggle('active');
         });
+
+        // Fecha o menu móvel se clicar num link dentro dele
+        mobileMenu.addEventListener('click', (event) => {
+            if (event.target.tagName === 'A') {
+                mobileMenu.classList.add('hidden');
+                menuButton.classList.remove('active');
+            }
+        });
+
+
+        // --- Scroll Animation using Intersection Observer ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleciona todos os elementos que devem ser animados ao rolar
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            // Verifica se a API IntersectionObserver é suportada
+            if ('IntersectionObserver' in window) {
+                // Configurações do Intersection Observer
+                const observerOptions = {
+                    root: null, // Observa em relação ao viewport
+                    rootMargin: '0px',
+                    threshold: 0.1 // Aciona quando 10% do elemento está visível
+                };
+
+                // Função callback que será executada quando um elemento observado intersectar o viewport
+                const intersectionCallback = (entries, observer) => {
+                    entries.forEach(entry => {
+                        // Se o elemento está a intersectar (visível)
+                        if (entry.isIntersecting) {
+                            // Adiciona a classe 'is-visible' para acionar a animação CSS
+                            entry.target.classList.add('is-visible');
+                            // Para de observar o elemento após a animação ter sido acionada uma vez
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                };
+
+                // Cria uma nova instância do Intersection Observer
+                const observer = new IntersectionObserver(intersectionCallback, observerOptions);
+
+                // Começa a observar cada elemento que deve ser animado
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
+
+            } else {
+                // Fallback para navegadores que não suportam IntersectionObserver:
+                // Simplesmente torna todos os elementos visíveis imediatamente.
+                console.warn("Intersection Observer not supported, animations disabled.");
+                animatedElements.forEach(el => {
+                    el.classList.add('is-visible'); // Torna visível sem animação
+                    el.style.opacity = 1; // Garante opacidade (caso a classe não faça)
+                    el.style.transform = 'translateY(0)'; // Garante posição (caso a classe não faça)
+                });
+            }
+        });
+
     </script>
 
 </body>
