@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
         /* === Cores Base do Tema (Definidas via Classes Tailwind) === */
         .bg-primary { background-color: #0A2342; } /* Deep Blue */
@@ -157,6 +158,20 @@
              padding: 0.1rem 0.25rem;
              border-radius: 0.25rem;
         }
+        /* Placeholder para Anúncios */
+        .adsense-placeholder {
+            background-color: #e9e9e9;
+            border: 1px dashed #ccc;
+            min-height: 90px; /* Altura mínima comum para banners */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #777;
+            font-size: 0.9rem;
+            margin: 1rem 0; /* Espaçamento vertical */
+            padding: 1rem;
+        }
 
     </style>
 </head>
@@ -189,6 +204,9 @@
 
     <main class="container mx-auto px-6 py-12 pt-20">
 
+        <div class="adsense-placeholder">
+            Espaço para Anúncio AdSense (Ex: Banner Superior)<br/>
+            </div>
         <section class="text-center mb-16 animate-on-scroll">
             <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Ferramentas Inteligentes para o Mercado Imobiliário</h1>
             <p class="text-lg text-gray-600 mb-8">Simplifique suas tarefas e otimize seus resultados com nossas soluções.</p>
@@ -229,6 +247,9 @@
             </div>
         </section>
 
+        <div class="adsense-placeholder">
+            Espaço para Anúncio AdSense (Ex: Entre Seções)<br/>
+            </div>
         <section id="about" class="bg-white rounded-lg shadow p-8 mb-16 animate-on-scroll">
             <h2 class="text-3xl font-bold text-primary mb-6 text-center">Sobre Nós</h2>
             <p class="text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
@@ -249,7 +270,10 @@
     <footer class="bg-primary text-gray-400 mt-16 py-8 px-6 text-center header-gradient">
         <p>&copy; 2024 Real Estate Tools. Todos os direitos reservados.</p>
         <p>Desenvolvido com <i class="fas fa-heart text-secondary fa-icon-adjust"></i> por [Seu Nome ou Empresa]</p>
-    </footer>
+
+         <div class="adsense-placeholder mt-4 max-w-lg mx-auto"> Espaço para Anúncio AdSense (Ex: Rodapé)<br/>
+            </div>
+        </footer>
 
     <div id="calculatorModal" class="modal fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
@@ -316,7 +340,6 @@
             <div id="calc_results" class="modal-results mt-4" style="display: none;"></div>
         </div>
     </div>
-
     <div id="profitabilityModal" class="modal fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
             <button id="closeProfitabilityModalButton" class="absolute top-4 right-4 text-gray-500 hover:text-primary transition duration-200">
@@ -357,7 +380,6 @@
             <div id="prof_results" class="modal-results mt-4" style="display: none;"></div>
         </div>
     </div>
-
     <div id="comparatorModal" class="modal fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto relative"> <button id="closeComparatorModalButton" class="absolute top-4 right-4 text-gray-500 hover:text-primary transition duration-200">
                 <i class="fas fa-times fa-lg"></i>
@@ -460,7 +482,6 @@
             </div>
         </div>
     </div>
-
     <script>
         // --- Helper Functions (Shared) ---
         function formatarMoeda(valor, includeSymbol = true) {
@@ -821,7 +842,7 @@
                 const custosMensais = parseFloatInput(custosMensaisInput.value, "Custos Mensais", errorMessageDiv.id);
                  if (custosMensais === null) return;
                 const taxaVacancia = parseFloatInput(taxaVacanciaInput.value, "Taxa de Vacância", errorMessageDiv.id);
-                 if (taxaVacancia === null || taxaVacancia > 100) { displayError("Taxa de vacância inválida (0-100).", errorMessageDiv); return; }
+                 if (taxaVacancia === null || taxaVacancia < 0 || taxaVacancia > 100) { displayError("Taxa de vacância inválida (0-100).", errorMessageDiv); return; }
                 const valorizacaoAnual = parseFloatInput(valorizacaoAnualInput.value, "Valorização Anual", errorMessageDiv.id);
                  if (valorizacaoAnual === null) return; // Can be negative
 
@@ -926,7 +947,7 @@
                     data[i].outros = currentInputs.outros.value.trim();
 
                     // Check for null values (errors during parsing)
-                    if (Object.values(data[i]).some(val => val === null)) {
+                    if (Object.values(data[i]).slice(1, -1).some(val => val === null)) { // Check numeric/parsed fields only
                         hasError = true;
                         // Error message already displayed by parsing functions
                     }
@@ -952,16 +973,21 @@
                     let class1 = '';
                     let class2 = '';
 
+                    // Format if function provided
                     if (formatFunc) {
-                        displayValue1 = formatFunc(value1);
-                        displayValue2 = formatFunc(value2);
+                        displayValue1 = value1 !== null ? formatFunc(value1) : 'N/A';
+                        displayValue2 = value2 !== null ? formatFunc(value2) : 'N/A';
+                    } else {
+                         displayValue1 = value1 !== null ? value1 : 'N/A';
+                         displayValue2 = value2 !== null ? value2 : 'N/A';
                     }
 
-                    // Ensure values are numbers for comparison, handle nulls
-                    const num1 = typeof value1 === 'number' ? value1 : -Infinity;
-                    const num2 = typeof value2 === 'number' ? value2 : -Infinity;
 
-                    if (value1 !== null && value2 !== null && num1 !== num2) { // Only highlight if different and not null
+                    // Ensure values are numbers for comparison, handle nulls
+                    const num1 = typeof value1 === 'number' && !isNaN(value1) ? value1 : null;
+                    const num2 = typeof value2 === 'number' && !isNaN(value2) ? value2 : null;
+
+                    if (num1 !== null && num2 !== null && num1 !== num2) { // Only highlight if different and not null numbers
                          if (highlightLower && num1 < num2) class1 = 'highlight';
                          if (highlightLower && num2 < num1) class2 = 'highlight';
                          if (highlightHigher && num1 > num2) class1 = 'highlight';
@@ -969,8 +995,8 @@
                     }
 
 
-                    html1 += `<p><strong>${label}:</strong> <span class="${class1}">${displayValue1 ?? 'N/A'}</span></p>`;
-                    html2 += `<p><strong>${label}:</strong> <span class="${class2}">${displayValue2 ?? 'N/A'}</span></p>`;
+                    html1 += `<p><strong>${label}:</strong> <span class="${class1}">${displayValue1}</span></p>`;
+                    html2 += `<p><strong>${label}:</strong> <span class="${class2}">${displayValue2}</span></p>`;
                 }
 
                 addRow('Preço', data[0].preco, data[1].preco, formatarMoeda, true); // Highlight lower price
@@ -1004,6 +1030,14 @@
              if (clearButton) clearButton.addEventListener('click', limparCampos);
 
         })(); // IIFE
+
+        // --- AdSense Auto-Push (se usar blocos automáticos) ---
+        // Se você colar o código de anúncios automáticos na <head>,
+        // esta linha pode ajudar a garantir que os anúncios sejam exibidos
+        // após o conteúdo ser carregado dinamicamente (se aplicável).
+        // (adsbygoogle = window.adsbygoogle || []).push({});
+        // Descomente a linha acima APENAS se estiver a usar anúncios automáticos
+        // e os anúncios não estiverem a aparecer corretamente.
 
     </script>
 
