@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferramentas de Imob - Suas Ferramentas Imobiliárias</title>
+    <title>Real Estate Tools - Suas Ferramentas Imobiliárias</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,23 +76,18 @@
         .delay-400 { transition-delay: 0.4s !important; }
 
         /* === Estilos do Modal === */
-        /* Oculta a barra de rolagem quando o modal está aberto */
-        body.modal-open {
-            overflow: hidden;
+        body.modal-open { overflow: hidden; }
+        .modal {
+            z-index: 100; /* Garante que o modal fique acima */
         }
-        /* Garante que o modal fique acima de outros elementos */
-        #calculatorModal {
-            z-index: 100;
-        }
-        /* Estilo para inputs dentro do modal */
         .modal-input {
-             width: 100%; /* Usa largura total */
-             padding: 0.5rem 0.75rem; /* py-2 px-3 */
-             border: 1px solid #D1D5DB; /* border border-gray-300 */
+             width: 100%;
+             padding: 0.5rem 0.75rem;
+             border: 1px solid #D1D5DB; /* border-gray-300 */
              border-radius: 0.375rem; /* rounded-md */
              font-size: 1rem;
              color: #1F2937; /* text-gray-800 */
-             background-color: #FFFFFF; /* bg-white */
+             background-color: #FFFFFF;
              transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
         .modal-input:focus {
@@ -100,14 +95,12 @@
             border-color: #D4AF37; /* border-secondary */
             box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3); /* Ring effect */
         }
-         /* Estilo para labels dentro do modal */
         .modal-label {
             display: block;
             margin-bottom: 0.25rem; /* mb-1 */
             font-weight: 600; /* font-semibold */
             color: #0A2342; /* text-primary */
         }
-         /* Estilo para o resultado e erro */
         .modal-results {
             margin-top: 1rem; /* mt-4 */
             padding: 0.75rem; /* p-3 */
@@ -115,13 +108,54 @@
             border-radius: 0.375rem; /* rounded-md */
             white-space: pre-wrap;
             color: #1F2937; /* text-gray-800 */
-            font-family: monospace; /* Use monospace for better formatting */
+            font-family: monospace;
             border: 1px solid #D1D5DB; /* border-gray-300 */
         }
         .modal-error {
             color: #DC2626; /* text-red-600 */
             margin-bottom: 0.75rem; /* mb-3 */
             font-weight: 500; /* font-medium */
+        }
+        /* Estilo para Textarea no Comparador */
+        .modal-textarea {
+             width: 100%;
+             padding: 0.5rem 0.75rem;
+             border: 1px solid #D1D5DB; /* border-gray-300 */
+             border-radius: 0.375rem; /* rounded-md */
+             font-size: 1rem;
+             color: #1F2937; /* text-gray-800 */
+             background-color: #FFFFFF;
+             transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+             min-height: 80px; /* Altura mínima */
+        }
+        .modal-textarea:focus {
+            outline: none;
+            border-color: #D4AF37; /* border-secondary */
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3); /* Ring effect */
+        }
+        /* Estilos para o Comparador */
+        .comparator-results h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0A2342; /* text-primary */
+            margin-top: 0.75rem;
+            margin-bottom: 0.25rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.25rem;
+        }
+        .comparator-results p {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .comparator-results strong {
+             color: #374151; /* text-gray-700 */
+        }
+        .highlight { /* Para destacar diferenças no comparador */
+             background-color: #FEF9C3; /* bg-yellow-100 */
+             font-weight: bold;
+             color: #713F12; /* text-yellow-800 */
+             padding: 0.1rem 0.25rem;
+             border-radius: 0.25rem;
         }
 
     </style>
@@ -132,7 +166,7 @@
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div>
                 <a href="#" class="text-2xl font-bold text-secondary">
-                  <i class="fas fa-tools mr-2 fa-icon-adjust"></i>Ferramentas de Imob
+                  <i class="fas fa-tools mr-2 fa-icon-adjust"></i>Real Estate Tools
                 </a>
             </div>
             <div class="hidden md:flex space-x-4">
@@ -176,14 +210,14 @@
                     <div class="text-secondary text-3xl mb-4"><i class="fas fa-chart-line fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Análise de Rentabilidade</h3>
                     <p class="text-gray-600 mb-4">Avalie o potencial de retorno de investimentos em imóveis para locação.</p>
-                    <a href="#" class="text-secondary font-medium hover:text-primary-light transition duration-300">Acessar Ferramenta &rarr;</a>
+                    <a href="#" id="openProfitabilityModalLink" class="text-secondary font-medium hover:text-primary-light transition duration-300 cursor-pointer">Acessar Ferramenta &rarr;</a>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card animate-on-scroll delay-300">
                     <div class="text-secondary text-3xl mb-4"><i class="fas fa-map-marked-alt fa-icon-adjust"></i></div>
                     <h3 class="text-xl font-semibold text-primary mb-2">Comparador de Imóveis</h3>
-                    <p class="text-gray-600 mb-4">Compare características e preços de imóveis em diferentes regiões.</p>
-                    <a href="#" class="text-secondary font-medium hover:text-primary-light transition duration-300">Acessar Ferramenta &rarr;</a>
+                    <p class="text-gray-600 mb-4">Compare características e preços de imóveis lado a lado.</p>
+                    <a href="#" id="openComparatorModalLink" class="text-secondary font-medium hover:text-primary-light transition duration-300 cursor-pointer">Acessar Ferramenta &rarr;</a>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-lg p-6 border-secondary tool-card flex flex-col items-center justify-center text-center animate-on-scroll delay-400">
@@ -213,88 +247,316 @@
     </main>
 
     <footer class="bg-primary text-gray-400 mt-16 py-8 px-6 text-center header-gradient">
-        <p>&copy; 2024 Ferramentas de Imob. Todos os direitos reservados.</p>
+        <p>&copy; 2024 Real Estate Tools. Todos os direitos reservados.</p>
         <p>Desenvolvido com <i class="fas fa-heart text-secondary fa-icon-adjust"></i> por [Seu Nome ou Empresa]</p>
     </footer>
 
-    <div id="calculatorModal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div id="calculatorModal" class="modal fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
             <button id="closeCalculatorModalButton" class="absolute top-4 right-4 text-gray-500 hover:text-primary transition duration-200">
                 <i class="fas fa-times fa-lg"></i>
             </button>
-
             <h1 class="text-2xl font-bold text-primary mb-6 text-center">Calculadora de Financiamentos</h1>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
                 <div class="form-group">
-                  <label for="valorTotal" class="modal-label">Valor Total do Bem (R$):</label>
-                  <input id="valorTotal" type="text" class="modal-input" placeholder="Ex: 300000,00"/>
+                  <label for="calc_valorTotal" class="modal-label">Valor Total do Bem (R$):</label>
+                  <input id="calc_valorTotal" type="text" class="modal-input" placeholder="Ex: 300000,00"/>
                 </div>
-
                 <div class="form-group">
-                  <label for="valorEntrada" class="modal-label">Valor da Entrada (R$):</label>
-                  <input id="valorEntrada" type="text" class="modal-input" placeholder="Ex: 60000,00"/>
+                  <label for="calc_valorEntrada" class="modal-label">Valor da Entrada (R$):</label>
+                  <input id="calc_valorEntrada" type="text" class="modal-input" placeholder="Ex: 60000,00"/>
                 </div>
-
                 <div class="form-group">
-                  <label for="taxaJurosValor" class="modal-label">Taxa de Juros (%):</label>
-                  <input id="taxaJurosValor" type="text" class="modal-input" placeholder="Ex: 9,5"/>
+                  <label for="calc_taxaJurosValor" class="modal-label">Taxa de Juros (%):</label>
+                  <input id="calc_taxaJurosValor" type="text" class="modal-input" placeholder="Ex: 9,5"/>
                 </div>
-
                 <div class="form-group">
                   <label class="modal-label">Período da Taxa:</label>
                   <div class="flex items-center space-x-4 mt-1">
                     <div class="flex items-center">
-                      <input checked id="taxaAnual" name="taxaPeriodo" type="radio" value="anual" class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300"/>
-                      <label for="taxaAnual" class="ml-2 block text-sm text-gray-700">Anual</label>
+                      <input checked id="calc_taxaAnual" name="calc_taxaPeriodo" type="radio" value="anual" class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300"/>
+                      <label for="calc_taxaAnual" class="ml-2 block text-sm text-gray-700">Anual</label>
                     </div>
                     <div class="flex items-center">
-                      <input id="taxaMensal" name="taxaPeriodo" type="radio" value="mensal" class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300"/>
-                      <label for="taxaMensal" class="ml-2 block text-sm text-gray-700">Mensal</label>
+                      <input id="calc_taxaMensal" name="calc_taxaPeriodo" type="radio" value="mensal" class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300"/>
+                      <label for="calc_taxaMensal" class="ml-2 block text-sm text-gray-700">Mensal</label>
                     </div>
                   </div>
                 </div>
-
-                 <div class="form-group md:col-span-2"> <label for="numParcelasFinanciamento" class="modal-label">Nº Total Parcelas Financiamento:</label>
-                  <input id="numParcelasFinanciamento" min="1" type="number" class="modal-input" placeholder="Ex: 360"/>
+                 <div class="form-group md:col-span-2">
+                  <label for="calc_numParcelasFinanciamento" class="modal-label">Nº Total Parcelas Financiamento:</label>
+                  <input id="calc_numParcelasFinanciamento" min="1" type="number" class="modal-input" placeholder="Ex: 360"/>
                 </div>
             </div>
-
             <div class="form-group mb-4 border-t border-gray-200 pt-4">
                 <div class="flex items-center">
-                    <input id="entradaParcelada" type="checkbox" class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300 rounded"/>
-                    <label for="entradaParcelada" class="ml-2 block text-sm font-medium text-gray-700">Entrada será parcelada?</label>
+                    <input id="calc_entradaParcelada" type="checkbox" class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300 rounded"/>
+                    <label for="calc_entradaParcelada" class="ml-2 block text-sm font-medium text-gray-700">Entrada será parcelada?</label>
                 </div>
             </div>
-
-            <div class="entrada-options mb-4 pl-5 border-l-2 border-gray-200" id="entradaOptions" style="display: none;">
+            <div class="entrada-options mb-4 pl-5 border-l-2 border-gray-200" id="calc_entradaOptions" style="display: none;">
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                     <div class="form-group">
-                      <label for="numParcelasEntrada" class="modal-label">Nº Parcelas da Entrada:</label>
-                      <input id="numParcelasEntrada" min="0" type="number" class="modal-input" placeholder="Ex: 36" disabled/>
+                      <label for="calc_numParcelasEntrada" class="modal-label">Nº Parcelas da Entrada:</label>
+                      <input id="calc_numParcelasEntrada" min="0" type="number" class="modal-input" placeholder="Ex: 36" disabled/>
                     </div>
-                    <div class="form-group flex items-end pb-1"> <div class="flex items-center">
-                          <input id="reduzirPrazo" type="checkbox" class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300 rounded" disabled/>
-                          <label for="reduzirPrazo" class="ml-2 block text-sm font-medium text-gray-700">Reduzir prazo do financiamento?</label>
+                    <div class="form-group flex items-end pb-1">
+                        <div class="flex items-center">
+                          <input id="calc_reduzirPrazo" type="checkbox" class="h-4 w-4 text-secondary focus:ring-secondary border-gray-300 rounded" disabled/>
+                          <label for="calc_reduzirPrazo" class="ml-2 block text-sm font-medium text-gray-700">Reduzir prazo do financiamento?</label>
                         </div>
                     </div>
                  </div>
             </div>
-
             <div class="button-group flex flex-wrap gap-2 mt-6 border-t border-gray-200 pt-4">
-              <button id="calculateButton" class="btn-gold font-semibold py-2 px-5 rounded-md shadow hover:shadow-md transition duration-200">Calcular</button>
-              <button id="clearButton" type="reset" class="btn-orange font-semibold py-2 px-5 rounded-md shadow hover:shadow-md transition duration-200">Limpar</button>
+              <button id="calc_calculateButton" class="btn-gold font-semibold py-2 px-5 rounded-md shadow hover:shadow-md transition duration-200">Calcular</button>
+              <button id="calc_clearButton" type="reset" class="btn-orange font-semibold py-2 px-5 rounded-md shadow hover:shadow-md transition duration-200">Limpar</button>
             </div>
+            <div id="calc_errorMessage" class="modal-error mt-4"></div>
+            <div id="calc_results" class="modal-results mt-4" style="display: none;"></div>
+        </div>
+    </div>
 
-            <div id="errorMessage" class="modal-error mt-4"></div>
-            <div id="results" class="modal-results mt-4" style="display: none;"></div> </div> </div> <script>
+    <div id="profitabilityModal" class="modal fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
+            <button id="closeProfitabilityModalButton" class="absolute top-4 right-4 text-gray-500 hover:text-primary transition duration-200">
+                <i class="fas fa-times fa-lg"></i>
+            </button>
+            <h1 class="text-2xl font-bold text-primary mb-6 text-center">Análise de Rentabilidade (Locação)</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                <div class="form-group">
+                  <label for="prof_valorImovel" class="modal-label">Valor do Imóvel (R$):</label>
+                  <input id="prof_valorImovel" type="text" class="modal-input" placeholder="Ex: 500000,00"/>
+                </div>
+                 <div class="form-group">
+                  <label for="prof_custosAquisicao" class="modal-label">Custos Aquisição (ITBI, etc) (R$):</label>
+                  <input id="prof_custosAquisicao" type="text" class="modal-input" placeholder="Ex: 25000,00"/>
+                </div>
+                <div class="form-group">
+                  <label for="prof_aluguelMensal" class="modal-label">Aluguel Mensal Bruto (R$):</label>
+                  <input id="prof_aluguelMensal" type="text" class="modal-input" placeholder="Ex: 2500,00"/>
+                </div>
+                <div class="form-group">
+                  <label for="prof_custosMensais" class="modal-label">Custos Mensais (Condo, IPTU) (R$):</label>
+                  <input id="prof_custosMensais" type="text" class="modal-input" placeholder="Ex: 600,00"/>
+                </div>
+                <div class="form-group">
+                  <label for="prof_taxaVacancia" class="modal-label">Taxa de Vacância Anual (%):</label>
+                  <input id="prof_taxaVacancia" type="text" class="modal-input" placeholder="Ex: 5"/>
+                </div>
+                 <div class="form-group">
+                  <label for="prof_valorizacaoAnual" class="modal-label">Valorização Anual Esperada (%):</label>
+                  <input id="prof_valorizacaoAnual" type="text" class="modal-input" placeholder="Ex: 4"/>
+                </div>
+            </div>
+            <div class="button-group flex flex-wrap gap-2 mt-6 border-t border-gray-200 pt-4">
+              <button id="prof_calculateButton" class="btn-gold font-semibold py-2 px-5 rounded-md shadow hover:shadow-md transition duration-200">Analisar</button>
+              <button id="prof_clearButton" type="reset" class="btn-orange font-semibold py-2 px-5 rounded-md shadow hover:shadow-md transition duration-200">Limpar</button>
+            </div>
+            <div id="prof_errorMessage" class="modal-error mt-4"></div>
+            <div id="prof_results" class="modal-results mt-4" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div id="comparatorModal" class="modal fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto relative"> <button id="closeComparatorModalButton" class="absolute top-4 right-4 text-gray-500 hover:text-primary transition duration-200">
+                <i class="fas fa-times fa-lg"></i>
+            </button>
+            <h1 class="text-2xl font-bold text-primary mb-6 text-center">Comparador de Imóveis</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 mb-6">
+                <div class="border-r border-gray-200 pr-8">
+                    <h3 class="text-lg font-semibold text-primary mb-4">Imóvel 1</h3>
+                    <div class="space-y-3">
+                        <div class="form-group">
+                          <label for="comp1_nome" class="modal-label">Nome/Endereço:</label>
+                          <input id="comp1_nome" type="text" class="modal-input" placeholder="Ex: Apto Centro"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp1_preco" class="modal-label">Preço (R$):</label>
+                          <input id="comp1_preco" type="text" class="modal-input" placeholder="Ex: 450000"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp1_area" class="modal-label">Área (m²):</label>
+                          <input id="comp1_area" type="text" class="modal-input" placeholder="Ex: 70"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp1_quartos" class="modal-label">Nº Quartos:</label>
+                          <input id="comp1_quartos" type="number" min="0" class="modal-input" placeholder="Ex: 2"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp1_banheiros" class="modal-label">Nº Banheiros:</label>
+                          <input id="comp1_banheiros" type="number" min="0" class="modal-input" placeholder="Ex: 1"/>
+                        </div>
+                         <div class="form-group">
+                          <label for="comp1_vagas" class="modal-label">Vagas Garagem:</label>
+                          <input id="comp1_vagas" type="number" min="0" class="modal-input" placeholder="Ex: 1"/>
+                        </div>
+                         <div class="form-group">
+                          <label for="comp1_condominio" class="modal-label">Condomínio (R$):</label>
+                          <input id="comp1_condominio" type="text" class="modal-input" placeholder="Ex: 400"/>
+                        </div>
+                         <div class="form-group">
+                          <label for="comp1_iptu" class="modal-label">IPTU Anual (R$):</label>
+                          <input id="comp1_iptu" type="text" class="modal-input" placeholder="Ex: 800"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp1_outros" class="modal-label">Outras Características:</label>
+                          <textarea id="comp1_outros" class="modal-textarea" rows="3" placeholder="Ex: Varanda, armários embutidos..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                     <h3 class="text-lg font-semibold text-primary mb-4">Imóvel 2</h3>
+                     <div class="space-y-3">
+                        <div class="form-group">
+                          <label for="comp2_nome" class="modal-label">Nome/Endereço:</label>
+                          <input id="comp2_nome" type="text" class="modal-input" placeholder="Ex: Casa Bairro Novo"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp2_preco" class="modal-label">Preço (R$):</label>
+                          <input id="comp2_preco" type="text" class="modal-input" placeholder="Ex: 480000"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp2_area" class="modal-label">Área (m²):</label>
+                          <input id="comp2_area" type="text" class="modal-input" placeholder="Ex: 90"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp2_quartos" class="modal-label">Nº Quartos:</label>
+                          <input id="comp2_quartos" type="number" min="0" class="modal-input" placeholder="Ex: 3"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp2_banheiros" class="modal-label">Nº Banheiros:</label>
+                          <input id="comp2_banheiros" type="number" min="0" class="modal-input" placeholder="Ex: 2"/>
+                        </div>
+                         <div class="form-group">
+                          <label for="comp2_vagas" class="modal-label">Vagas Garagem:</label>
+                          <input id="comp2_vagas" type="number" min="0" class="modal-input" placeholder="Ex: 2"/>
+                        </div>
+                         <div class="form-group">
+                          <label for="comp2_condominio" class="modal-label">Condomínio (R$):</label>
+                          <input id="comp2_condominio" type="text" class="modal-input" placeholder="Ex: 150"/>
+                        </div>
+                         <div class="form-group">
+                          <label for="comp2_iptu" class="modal-label">IPTU Anual (R$):</label>
+                          <input id="comp2_iptu" type="text" class="modal-input" placeholder="Ex: 1000"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="comp2_outros" class="modal-label">Outras Características:</label>
+                          <textarea id="comp2_outros" class="modal-textarea" rows="3" placeholder="Ex: Quintal, churrasqueira..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="button-group flex flex-wrap gap-2 mt-6 border-t border-gray-200 pt-4">
+              <button id="comp_compareButton" class="btn-gold font-semibold py-2 px-5 rounded-md shadow hover:shadow-md transition duration-200">Comparar</button>
+              <button id="comp_clearButton" type="reset" class="btn-orange font-semibold py-2 px-5 rounded-md shadow hover:shadow-md transition duration-200">Limpar</button>
+            </div>
+            <div id="comp_errorMessage" class="modal-error mt-4"></div>
+            <div id="comp_results" class="modal-results mt-4 comparator-results" style="display: none;">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+                    <div id="comp_results_1"></div>
+                    <div id="comp_results_2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Helper Functions (Shared) ---
+        function formatarMoeda(valor, includeSymbol = true) {
+            if (typeof valor !== 'number' || isNaN(valor)) {
+                return includeSymbol ? "R$ Inválido" : "Inválido";
+            }
+            return valor.toLocaleString('pt-BR', {
+                style: includeSymbol ? 'currency' : 'decimal',
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function formatarPercentual(valor) {
+             if (typeof valor !== 'number' || isNaN(valor)) {
+                return "Inválido %";
+            }
+             return valor.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + '%';
+        }
+
+        function parseFloatInput(value, fieldName, errorDivId) {
+             const errorDiv = document.getElementById(errorDivId);
+             if (!value) {
+                 displayError(`O campo '${fieldName}' não pode estar vazio.`, errorDiv);
+                 return null;
+             }
+             const cleanedValue = value.replace(/\./g, '').replace(',', '.');
+             const num = parseFloat(cleanedValue);
+             if (isNaN(num)) {
+                 displayError(`Valor inválido para '${fieldName}'. Use apenas números.`, errorDiv);
+                 return null;
+             }
+             if (num < 0) {
+                 displayError(`O valor de '${fieldName}' não pode ser negativo.`, errorDiv);
+                 return null;
+             }
+             return num;
+        }
+
+        function parseIntInput(value, fieldName, errorDivId, allowZero = false) {
+             const errorDiv = document.getElementById(errorDivId);
+             if (value === null || value === undefined || value === '') { // Allow empty if not strictly required, handle later
+                 if (!allowZero) { // If zero is not allowed and field is empty
+                     displayError(`O campo '${fieldName}' não pode estar vazio.`, errorDiv);
+                     return null;
+                 }
+                 return allowZero ? 0 : null; // Return 0 if allowed, null otherwise
+             }
+             const num = parseInt(value, 10);
+             if (isNaN(num) || !Number.isInteger(num)) {
+                 displayError(`Valor inválido para '${fieldName}'. Use apenas números inteiros.`, errorDiv);
+                 return null;
+             }
+             if (!allowZero && num <= 0) { // Check if zero/negative is allowed
+                 displayError(`O valor de '${fieldName}' deve ser maior que zero.`, errorDiv);
+                 return null;
+             }
+              if (num < 0) {
+                 displayError(`O valor de '${fieldName}' não pode ser negativo.`, errorDiv);
+                 return null;
+             }
+             return num;
+        }
+
+        function displayError(message, errorDiv) {
+            if (errorDiv) {
+                errorDiv.innerText = message;
+                errorDiv.style.display = 'block';
+            }
+            // Optionally clear results for the specific modal
+            const resultsDivId = errorDiv.id.replace('errorMessage', 'results');
+            const resultsDiv = document.getElementById(resultsDivId);
+            if (resultsDiv) {
+                resultsDiv.innerHTML = ''; // Use innerHTML for comparator
+                resultsDiv.style.display = 'none';
+            }
+        }
+
+        function clearError(errorDiv) {
+            if (errorDiv) {
+                errorDiv.innerText = '';
+                errorDiv.style.display = 'none';
+            }
+        }
+
         // --- Mobile Menu Toggle ---
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         if (menuButton && mobileMenu) {
             menuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
-                menuButton.classList.toggle('active'); // For potential styling
+                menuButton.classList.toggle('active');
             });
             mobileMenu.addEventListener('click', (event) => {
                 if (event.target.tagName === 'A') {
@@ -304,7 +566,7 @@
             });
         }
 
-        // --- Scroll Animation using Intersection Observer ---
+        // --- Scroll Animation ---
         document.addEventListener('DOMContentLoaded', () => {
             const animatedElements = document.querySelectorAll('.animate-on-scroll');
             if ('IntersectionObserver' in window) {
@@ -329,320 +591,419 @@
             }
         });
 
-        // --- Calculator Modal Logic ---
-        const calculatorModal = document.getElementById('calculatorModal');
-        const openCalculatorModalLink = document.getElementById('openCalculatorModalLink');
-        const closeCalculatorModalButton = document.getElementById('closeCalculatorModalButton');
+        // --- Modal Generic Open/Close Logic ---
+        function setupModal(modalId, openLinkId, closeButtonId) {
+            const modal = document.getElementById(modalId);
+            const openLink = document.getElementById(openLinkId);
+            const closeButton = document.getElementById(closeButtonId);
 
-        if (calculatorModal && openCalculatorModalLink && closeCalculatorModalButton) {
-            // Function to open the modal
+            if (!modal || !openLink || !closeButton) {
+                console.error(`Modal setup failed for ${modalId}. Elements not found.`);
+                return;
+            }
+
             const openModal = () => {
-                calculatorModal.classList.remove('hidden');
-                document.body.classList.add('modal-open'); // Prevent background scrolling
+                modal.classList.remove('hidden');
+                document.body.classList.add('modal-open');
             };
 
-            // Function to close the modal
             const closeModal = () => {
-                calculatorModal.classList.add('hidden');
-                document.body.classList.remove('modal-open');
+                modal.classList.add('hidden');
+                // Only remove modal-open if no other modals are open (future proofing)
+                if (!document.querySelector('.modal:not(.hidden)')) {
+                     document.body.classList.remove('modal-open');
+                }
             };
 
-            // Event listeners for opening/closing
-            openCalculatorModalLink.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent default link behavior
+            openLink.addEventListener('click', (e) => {
+                e.preventDefault();
                 openModal();
             });
-            closeCalculatorModalButton.addEventListener('click', closeModal);
-
-            // Close modal if clicking on the background overlay
-            calculatorModal.addEventListener('click', (event) => {
-                if (event.target === calculatorModal) { // Check if the click is directly on the overlay
+            closeButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
                     closeModal();
                 }
             });
-
-            // Close modal with the Escape key
-             document.addEventListener('keydown', (event) => {
-                if (event.key === 'Escape' && !calculatorModal.classList.contains('hidden')) {
+             // Add Escape key listener only once per modal setup
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
                     closeModal();
                 }
             });
-        } else {
-            console.error("Calculator modal elements not found!");
         }
+
+        // Setup all modals
+        setupModal('calculatorModal', 'openCalculatorModalLink', 'closeCalculatorModalButton');
+        setupModal('profitabilityModal', 'openProfitabilityModalLink', 'closeProfitabilityModalButton');
+        setupModal('comparatorModal', 'openComparatorModalLink', 'closeComparatorModalButton');
 
 
         // --- Financing Calculator Logic ---
+        (function() {
+            const prefix = 'calc_'; // Prefix for calculator element IDs
+            const valorTotalInput = document.getElementById(prefix + 'valorTotal');
+            const valorEntradaInput = document.getElementById(prefix + 'valorEntrada');
+            const taxaJurosValorInput = document.getElementById(prefix + 'taxaJurosValor');
+            const numParcelasFinanciamentoInput = document.getElementById(prefix + 'numParcelasFinanciamento');
+            const entradaParceladaCheckbox = document.getElementById(prefix + 'entradaParcelada');
+            const entradaOptionsDiv = document.getElementById(prefix + 'entradaOptions');
+            const numParcelasEntradaInput = document.getElementById(prefix + 'numParcelasEntrada');
+            const reduzirPrazoCheckbox = document.getElementById(prefix + 'reduzirPrazo');
+            const calculateButton = document.getElementById(prefix + 'calculateButton');
+            const clearButton = document.getElementById(prefix + 'clearButton');
+            const resultsDiv = document.getElementById(prefix + 'results');
+            const errorMessageDiv = document.getElementById(prefix + 'errorMessage');
 
-        // Get references to calculator elements
-        const valorTotalInput = document.getElementById('valorTotal');
-        const valorEntradaInput = document.getElementById('valorEntrada');
-        const taxaJurosValorInput = document.getElementById('taxaJurosValor');
-        const numParcelasFinanciamentoInput = document.getElementById('numParcelasFinanciamento');
-        const entradaParceladaCheckbox = document.getElementById('entradaParcelada');
-        const entradaOptionsDiv = document.getElementById('entradaOptions');
-        const numParcelasEntradaInput = document.getElementById('numParcelasEntrada');
-        const reduzirPrazoCheckbox = document.getElementById('reduzirPrazo');
-        const calculateButton = document.getElementById('calculateButton');
-        const clearButton = document.getElementById('clearButton');
-        const resultsDiv = document.getElementById('results');
-        const errorMessageDiv = document.getElementById('errorMessage');
+            function calcularParcelaPrice(valorFinanciado, taxaJurosMensalPercentual, numParcelas) {
+                const vf = valorFinanciado;
+                const tjmp = taxaJurosMensalPercentual;
+                const np = numParcelas;
+                if (np <= 0 || vf < 0) return NaN; // Cannot calculate if no installments or negative value
+                if (vf === 0) return 0; // If nothing to finance, installment is zero
+                if (tjmp === 0) return vf / np;
 
-        // Function to format number as currency (R$)
-        function formatarMoeda(valor) {
-            if (typeof valor !== 'number' || isNaN(valor)) {
-                return "R$ Inválido";
-            }
-            return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
-
-        // Function to clean and parse float input (allows comma or dot as decimal separator)
-        function parseFloatInput(value, fieldName) {
-            if (!value) { // Handle empty input
-                 displayError(`O campo '${fieldName}' não pode estar vazio.`);
-                 return null;
-            }
-            // Replace thousand separators (dots) and then replace comma with dot for decimal
-            const cleanedValue = value.replace(/\./g, '').replace(',', '.');
-            const num = parseFloat(cleanedValue);
-            if (isNaN(num)) {
-                displayError(`Valor inválido para '${fieldName}'. Use apenas números (ex: 150000,50 ou 150000.50).`);
-                return null;
-            }
-            if (num < 0) {
-                displayError(`O valor de '${fieldName}' não pode ser negativo.`);
-                return null;
-            }
-            return num;
-        }
-
-        // Function to parse integer input
-        function parseIntInput(value, fieldName) {
-             if (!value) { // Handle empty input
-                 displayError(`O campo '${fieldName}' não pode estar vazio.`);
-                 return null;
-            }
-            const num = parseInt(value, 10);
-            if (isNaN(num) || !Number.isInteger(num)) { // Ensure it's a valid integer
-                displayError(`Valor inválido para '${fieldName}'. Use apenas números inteiros.`);
-                return null;
-            }
-             if (num < 0) {
-                displayError(`O valor de '${fieldName}' não pode ser negativo.`);
-                return null;
-            }
-            return num;
-        }
-
-        // Display error message
-        function displayError(message) {
-            errorMessageDiv.innerText = message;
-            errorMessageDiv.style.display = 'block';
-            resultsDiv.innerText = ''; // Clear previous results
-            resultsDiv.style.display = 'none';
-        }
-
-        // Clear error message
-        function clearError() {
-            errorMessageDiv.innerText = '';
-            errorMessageDiv.style.display = 'none';
-        }
-
-        // Calculation function (PRICE system)
-        function calcularParcelaPrice(valorFinanciado, taxaJurosMensalPercentual, numParcelas) {
-            const vf = valorFinanciado;
-            const tjmp = taxaJurosMensalPercentual;
-            const np = numParcelas;
-
-            if (np <= 0 || vf <= 0) {
-                return NaN; // Indicate error for calculation
-            }
-            if (tjmp === 0) {
-                return vf / np;
-            } else {
                 const taxa = tjmp / 100.0;
                 const parcela = vf * (taxa * Math.pow(1 + taxa, np)) / (Math.pow(1 + taxa, np) - 1);
                 return parcela;
             }
-        }
 
-        // Toggle visibility of entry installment options
-        function toggleEntradaParceladaOptions() {
-            if (entradaParceladaCheckbox.checked) {
-                entradaOptionsDiv.style.display = 'block';
-                numParcelasEntradaInput.disabled = false;
-                reduzirPrazoCheckbox.disabled = false;
-            } else {
-                entradaOptionsDiv.style.display = 'none';
-                numParcelasEntradaInput.disabled = true;
-                reduzirPrazoCheckbox.disabled = true;
-                numParcelasEntradaInput.value = ""; // Clear value when hidden
-                reduzirPrazoCheckbox.checked = false; // Uncheck when hidden
-            }
-        }
-
-        // Main calculation function triggered by button click
-        function calcularFinanciamento() {
-            clearError(); // Clear previous errors
-
-            const valorTotal = parseFloatInput(valorTotalInput.value, "Valor Total do Bem");
-            if (valorTotal === null) return;
-
-            const valorEntrada = parseFloatInput(valorEntradaInput.value, "Valor da Entrada");
-            if (valorEntrada === null) return;
-
-            const taxaJurosValor = parseFloatInput(taxaJurosValorInput.value, "Taxa de Juros");
-            if (taxaJurosValor === null) return;
-
-            let numParcelasFinanciamento = parseIntInput(numParcelasFinanciamentoInput.value, "Nº Total Parcelas Financiamento");
-            if (numParcelasFinanciamento === null) return;
-
-            if (valorEntrada > valorTotal) {
-                displayError("O valor da entrada não pode ser maior que o valor total.");
-                return;
-            }
-            if (numParcelasFinanciamento <= 0) {
-                displayError("O número total de parcelas do financiamento deve ser maior que zero.");
-                return;
-            }
-
-            let valorFinanciado = valorTotal - valorEntrada;
-            if (valorFinanciado < 0) valorFinanciado = 0; // Cannot finance negative amount
-
-            const taxaPeriodoElement = document.querySelector('input[name="taxaPeriodo"]:checked');
-            if (!taxaPeriodoElement) {
-                 displayError("Selecione o período da taxa (Anual/Mensal).");
-                 return;
-            }
-            const taxaPeriodo = taxaPeriodoElement.value;
-            let taxaJurosMensal;
-
-            if (taxaPeriodo === 'anual') {
-                taxaJurosMensal = (Math.pow(1 + (taxaJurosValor / 100), 1 / 12) - 1) * 100;
-            } else {
-                taxaJurosMensal = taxaJurosValor;
-            }
-
-            const entradaParcelada = entradaParceladaCheckbox.checked;
-            const reduzirPrazo = reduzirPrazoCheckbox.checked;
-            let numParcelasEntrada = 0;
-            let valorParcelaEntrada = 0;
-
-            if (entradaParcelada) {
-                numParcelasEntrada = parseIntInput(numParcelasEntradaInput.value, "Nº Parcelas da Entrada");
-                if (numParcelasEntrada === null) return; // Stop if input is invalid
-                 if (numParcelasEntrada <= 0) {
-                    displayError("O número de parcelas da entrada deve ser maior que zero se a opção estiver marcada.");
-                    return;
-                 }
-
-                 // Simple division for entry installments (no interest assumed on entry)
-                 if (valorEntrada > 0 && numParcelasEntrada > 0) {
-                    valorParcelaEntrada = valorEntrada / numParcelasEntrada;
-                 }
-
-
-                if (reduzirPrazo) {
-                    if (numParcelasEntrada >= numParcelasFinanciamento) { // Use >= because financing starts after entry
-                        displayError("O número de parcelas da entrada não pode ser maior ou igual ao número total de parcelas do financiamento ao reduzir o prazo.");
-                        return;
-                    }
-                    numParcelasFinanciamento -= numParcelasEntrada;
+            function toggleEntradaParceladaOptions() {
+                if (!entradaParceladaCheckbox || !entradaOptionsDiv || !numParcelasEntradaInput || !reduzirPrazoCheckbox) return;
+                if (entradaParceladaCheckbox.checked) {
+                    entradaOptionsDiv.style.display = 'block';
+                    numParcelasEntradaInput.disabled = false;
+                    reduzirPrazoCheckbox.disabled = false;
                 } else {
-                     // If not reducing term, the financing starts *after* the entry installments are paid.
-                     // We need to calculate the future value of the financed amount.
-                     const taxaMensalDecimal = taxaJurosMensal / 100.0;
-                     valorFinanciado = valorFinanciado * Math.pow(1 + taxaMensalDecimal, numParcelasEntrada);
+                    entradaOptionsDiv.style.display = 'none';
+                    numParcelasEntradaInput.disabled = true;
+                    reduzirPrazoCheckbox.disabled = true;
+                    numParcelasEntradaInput.value = "";
+                    reduzirPrazoCheckbox.checked = false;
                 }
             }
 
-             // Calculate the main financing installment only if there's an amount to finance and installments > 0
-             let valorParcelaFinanciamento = 0;
-             let valorTotalFinanciamento = 0;
-             if (valorFinanciado > 0 && numParcelasFinanciamento > 0) {
-                valorParcelaFinanciamento = calcularParcelaPrice(valorFinanciado, taxaJurosMensal, numParcelasFinanciamento);
-                if (isNaN(valorParcelaFinanciamento)) {
-                     displayError("Não foi possível calcular a parcela do financiamento. Verifique os valores (taxa/prazo).");
-                     return;
-                 }
-                valorTotalFinanciamento = valorParcelaFinanciamento * numParcelasFinanciamento;
-             } else if (valorFinanciado > 0 && numParcelasFinanciamento <= 0) {
-                 // This case might happen if reduce term makes installments zero or negative
-                 displayError("Não há parcelas de financiamento restantes após aplicar as parcelas da entrada.");
-                 return;
+            function calcularFinanciamento() {
+                clearError(errorMessageDiv);
+                resultsDiv.style.display = 'none'; // Hide results initially
+
+                const valorTotal = parseFloatInput(valorTotalInput.value, "Valor Total do Bem", errorMessageDiv.id);
+                if (valorTotal === null) return;
+                const valorEntrada = parseFloatInput(valorEntradaInput.value, "Valor da Entrada", errorMessageDiv.id);
+                if (valorEntrada === null) return;
+                const taxaJurosValor = parseFloatInput(taxaJurosValorInput.value, "Taxa de Juros", errorMessageDiv.id);
+                if (taxaJurosValor === null) return;
+                let numParcelasFinanciamento = parseIntInput(numParcelasFinanciamentoInput.value, "Nº Total Parcelas Financiamento", errorMessageDiv.id);
+                if (numParcelasFinanciamento === null) return;
+
+                if (valorEntrada > valorTotal) {
+                    displayError("O valor da entrada não pode ser maior que o valor total.", errorMessageDiv); return;
+                }
+                if (numParcelasFinanciamento <= 0) {
+                    displayError("O número total de parcelas do financiamento deve ser maior que zero.", errorMessageDiv); return;
+                }
+
+                let valorFinanciado = valorTotal - valorEntrada;
+                if (valorFinanciado < 0) valorFinanciado = 0;
+
+                const taxaPeriodoElement = document.querySelector(`input[name="${prefix}taxaPeriodo"]:checked`);
+                if (!taxaPeriodoElement) { displayError("Selecione o período da taxa (Anual/Mensal).", errorMessageDiv); return; }
+                const taxaPeriodo = taxaPeriodoElement.value;
+                let taxaJurosMensal = (taxaPeriodo === 'anual') ? (Math.pow(1 + (taxaJurosValor / 100), 1 / 12) - 1) * 100 : taxaJurosValor;
+
+                const entradaParcelada = entradaParceladaCheckbox.checked;
+                const reduzirPrazo = reduzirPrazoCheckbox.checked;
+                let numParcelasEntrada = 0;
+                let valorParcelaEntrada = 0;
+
+                if (entradaParcelada) {
+                    numParcelasEntrada = parseIntInput(numParcelasEntradaInput.value, "Nº Parcelas da Entrada", errorMessageDiv.id);
+                    if (numParcelasEntrada === null) return;
+                    if (numParcelasEntrada <= 0) { displayError("O número de parcelas da entrada deve ser maior que zero.", errorMessageDiv); return; }
+                    if (valorEntrada > 0) valorParcelaEntrada = valorEntrada / numParcelasEntrada;
+
+                    if (reduzirPrazo) {
+                        if (numParcelasEntrada >= numParcelasFinanciamento) { displayError("Nº parcelas da entrada >= Nº parcelas financiamento ao reduzir prazo.", errorMessageDiv); return; }
+                        numParcelasFinanciamento -= numParcelasEntrada;
+                    } else {
+                        const taxaMensalDecimal = taxaJurosMensal / 100.0;
+                        valorFinanciado = valorFinanciado * Math.pow(1 + taxaMensalDecimal, numParcelasEntrada);
+                    }
+                }
+
+                let valorParcelaFinanciamento = 0;
+                let valorTotalFinanciamento = 0;
+                if (valorFinanciado > 0 && numParcelasFinanciamento > 0) {
+                    valorParcelaFinanciamento = calcularParcelaPrice(valorFinanciado, taxaJurosMensal, numParcelasFinanciamento);
+                    if (isNaN(valorParcelaFinanciamento)) { displayError("Não foi possível calcular a parcela do financiamento.", errorMessageDiv); return; }
+                    valorTotalFinanciamento = valorParcelaFinanciamento * numParcelasFinanciamento;
+                } else if (valorFinanciado > 0 && numParcelasFinanciamento <= 0) {
+                    displayError("Não há parcelas de financiamento restantes.", errorMessageDiv); return;
+                }
+
+                let resultText = "";
+                if (valorParcelaEntrada > 0) {
+                    resultText += `Parcela da Entrada: ${formatarMoeda(valorParcelaEntrada)} (${numParcelasEntrada}x)\n`;
+                    resultText += `------------------------------------\n`;
+                }
+                if (valorParcelaFinanciamento > 0) {
+                     resultText += `Nº Parcelas Financiamento: ${numParcelasFinanciamento}\n`;
+                     resultText += `Valor Parcela Financiamento: ${formatarMoeda(valorParcelaFinanciamento)}\n`;
+                     resultText += `Custo Total Financiamento: ${formatarMoeda(valorTotalFinanciamento)}\n`;
+                     resultText += `------------------------------------\n`;
+                     const custoTotalGeral = valorEntrada + valorTotalFinanciamento;
+                     resultText += `Custo Total Geral: ${formatarMoeda(custoTotalGeral)}\n`;
+                     const jurosTotais = custoTotalGeral - valorTotal;
+                     resultText += `Juros Totais Pagos: ${formatarMoeda(jurosTotais > 0 ? jurosTotais : 0)}`;
+                } else if (valorEntrada >= valorTotal && valorFinanciado <= 0) {
+                     resultText += `Pagamento à vista ou entrada cobre o valor total.\n`;
+                     if (valorParcelaEntrada > 0) { // If entry was parceled
+                         resultText += `Custo Total Geral (Entrada): ${formatarMoeda(valorEntrada)}`;
+                     } else {
+                         resultText += `Custo Total Geral: ${formatarMoeda(valorTotal)}`;
+                     }
+                } else if (valorFinanciado === 0 && valorEntrada < valorTotal) {
+                     resultText += `Valor financiado é zero. Verifique os valores.\n`;
+                } else {
+                     resultText += `Não há financiamento a calcular (Valor Financiado = ${formatarMoeda(valorFinanciado)}).`;
+                     if (valorEntrada > 0 && !entradaParcelada) resultText += `\nEntrada Paga: ${formatarMoeda(valorEntrada)}`;
+                }
+
+                resultsDiv.innerText = resultText.trim();
+                resultsDiv.style.display = 'block';
+                clearError(errorMessageDiv);
+            }
+
+            function limparCampos() {
+                valorTotalInput.value = '';
+                valorEntradaInput.value = '';
+                taxaJurosValorInput.value = '';
+                document.getElementById(prefix + 'taxaAnual').checked = true;
+                numParcelasFinanciamentoInput.value = '';
+                entradaParceladaCheckbox.checked = false;
+                toggleEntradaParceladaOptions(); // Also clears/disables sub-fields
+                resultsDiv.innerText = '';
+                resultsDiv.style.display = 'none';
+                clearError(errorMessageDiv);
+            }
+
+            if (entradaParceladaCheckbox) entradaParceladaCheckbox.addEventListener('change', toggleEntradaParceladaOptions);
+            if (calculateButton) calculateButton.addEventListener('click', calcularFinanciamento);
+            if (clearButton) clearButton.addEventListener('click', limparCampos);
+            toggleEntradaParceladaOptions(); // Initial setup
+        })(); // IIFE to scope calculator variables
+
+
+        // --- Profitability Analysis Logic ---
+        (function() {
+            const prefix = 'prof_'; // Prefix for profitability element IDs
+            const valorImovelInput = document.getElementById(prefix + 'valorImovel');
+            const custosAquisicaoInput = document.getElementById(prefix + 'custosAquisicao');
+            const aluguelMensalInput = document.getElementById(prefix + 'aluguelMensal');
+            const custosMensaisInput = document.getElementById(prefix + 'custosMensais');
+            const taxaVacanciaInput = document.getElementById(prefix + 'taxaVacancia');
+            const valorizacaoAnualInput = document.getElementById(prefix + 'valorizacaoAnual');
+            const calculateButton = document.getElementById(prefix + 'calculateButton');
+            const clearButton = document.getElementById(prefix + 'clearButton');
+            const resultsDiv = document.getElementById(prefix + 'results');
+            const errorMessageDiv = document.getElementById(prefix + 'errorMessage');
+
+             function analisarRentabilidade() {
+                clearError(errorMessageDiv);
+                resultsDiv.style.display = 'none';
+
+                const valorImovel = parseFloatInput(valorImovelInput.value, "Valor do Imóvel", errorMessageDiv.id);
+                if (valorImovel === null) return;
+                const custosAquisicao = parseFloatInput(custosAquisicaoInput.value, "Custos Aquisição", errorMessageDiv.id);
+                if (custosAquisicao === null) return;
+                const aluguelMensal = parseFloatInput(aluguelMensalInput.value, "Aluguel Mensal", errorMessageDiv.id);
+                if (aluguelMensal === null) return;
+                const custosMensais = parseFloatInput(custosMensaisInput.value, "Custos Mensais", errorMessageDiv.id);
+                 if (custosMensais === null) return;
+                const taxaVacancia = parseFloatInput(taxaVacanciaInput.value, "Taxa de Vacância", errorMessageDiv.id);
+                 if (taxaVacancia === null || taxaVacancia > 100) { displayError("Taxa de vacância inválida (0-100).", errorMessageDiv); return; }
+                const valorizacaoAnual = parseFloatInput(valorizacaoAnualInput.value, "Valorização Anual", errorMessageDiv.id);
+                 if (valorizacaoAnual === null) return; // Can be negative
+
+                const investimentoTotal = valorImovel + custosAquisicao;
+                const receitaBrutaAnual = aluguelMensal * 12;
+                const perdaVacancia = receitaBrutaAnual * (taxaVacancia / 100);
+                const custosAnuais = custosMensais * 12;
+                const receitaLiquidaAnual = receitaBrutaAnual - perdaVacancia - custosAnuais;
+
+                const capRate = (investimentoTotal > 0) ? (receitaLiquidaAnual / investimentoTotal) * 100 : 0;
+                // Simple Cash-on-Cash (assuming full cash purchase for this basic version)
+                const cashOnCash = capRate; // Same as Cap Rate in this simple scenario
+
+                const ganhoValorizacao = valorImovel * (valorizacaoAnual / 100);
+                const retornoTotalAnual = receitaLiquidaAnual + ganhoValorizacao;
+                const roiTotal = (investimentoTotal > 0) ? (retornoTotalAnual / investimentoTotal) * 100 : 0;
+
+                 let resultText = `Investimento Total: ${formatarMoeda(investimentoTotal)}\n`;
+                 resultText += `Receita Bruta Anual: ${formatarMoeda(receitaBrutaAnual)}\n`;
+                 resultText += `Custos Operacionais Anuais: ${formatarMoeda(custosAnuais)}\n`;
+                 resultText += `Perda por Vacância (${formatarPercentual(taxaVacancia)}): ${formatarMoeda(perdaVacancia)}\n`;
+                 resultText += `------------------------------------\n`;
+                 resultText += `Receita Líquida Anual (NOI): ${formatarMoeda(receitaLiquidaAnual)}\n`;
+                 resultText += `Cap Rate: ${formatarPercentual(capRate)}\n`;
+                 resultText += `Cash-on-Cash Return: ${formatarPercentual(cashOnCash)} (Simplificado)\n`;
+                 resultText += `------------------------------------\n`;
+                 resultText += `Ganho com Valorização (${formatarPercentual(valorizacaoAnual)}): ${formatarMoeda(ganhoValorizacao)}\n`;
+                 resultText += `Retorno Total Anual: ${formatarMoeda(retornoTotalAnual)}\n`;
+                 resultText += `ROI Total Anual: ${formatarPercentual(roiTotal)}`;
+
+                 resultsDiv.innerText = resultText.trim();
+                 resultsDiv.style.display = 'block';
+                 clearError(errorMessageDiv);
              }
 
+             function limparCampos() {
+                 valorImovelInput.value = '';
+                 custosAquisicaoInput.value = '';
+                 aluguelMensalInput.value = '';
+                 custosMensaisInput.value = '';
+                 taxaVacanciaInput.value = '';
+                 valorizacaoAnualInput.value = '';
+                 resultsDiv.innerText = '';
+                 resultsDiv.style.display = 'none';
+                 clearError(errorMessageDiv);
+             }
 
-            // Display results
-            let resultText = "";
-            if (valorParcelaEntrada > 0) {
-                resultText += `Parcela da Entrada: ${formatarMoeda(valorParcelaEntrada)} (${numParcelasEntrada}x)\n`;
-                resultText += `------------------------------------\n`;
+             if (calculateButton) calculateButton.addEventListener('click', analisarRentabilidade);
+             if (clearButton) clearButton.addEventListener('click', limparCampos);
+
+        })(); // IIFE
+
+
+        // --- Property Comparator Logic ---
+        (function() {
+            const prefix = 'comp_'; // Prefix for comparator element IDs
+            const compareButton = document.getElementById(prefix + 'compareButton');
+            const clearButton = document.getElementById(prefix + 'clearButton');
+            const resultsDiv = document.getElementById(prefix + 'results');
+            const results1Div = document.getElementById(prefix + 'results_1');
+            const results2Div = document.getElementById(prefix + 'results_2');
+            const errorMessageDiv = document.getElementById(prefix + 'errorMessage');
+
+            // Get all input elements for both properties
+            const inputs = {};
+            for (let i = 1; i <= 2; i++) {
+                inputs[i] = {
+                    nome: document.getElementById(`${prefix}${i}_nome`),
+                    preco: document.getElementById(`${prefix}${i}_preco`),
+                    area: document.getElementById(`${prefix}${i}_area`),
+                    quartos: document.getElementById(`${prefix}${i}_quartos`),
+                    banheiros: document.getElementById(`${prefix}${i}_banheiros`),
+                    vagas: document.getElementById(`${prefix}${i}_vagas`),
+                    condominio: document.getElementById(`${prefix}${i}_condominio`),
+                    iptu: document.getElementById(`${prefix}${i}_iptu`),
+                    outros: document.getElementById(`${prefix}${i}_outros`)
+                };
             }
-            if (valorParcelaFinanciamento > 0) {
-                 resultText += `Nº Parcelas Financiamento: ${numParcelasFinanciamento}\n`;
-                 resultText += `Valor Parcela Financiamento: ${formatarMoeda(valorParcelaFinanciamento)}\n`;
-                 resultText += `Custo Total Financiamento: ${formatarMoeda(valorTotalFinanciamento)}\n`;
-                 resultText += `------------------------------------\n`;
-                 const custoTotalGeral = valorEntrada + valorTotalFinanciamento;
-                 resultText += `Custo Total Geral: ${formatarMoeda(custoTotalGeral)}\n`;
-                 const jurosTotais = custoTotalGeral - valorTotal;
-                 resultText += `Juros Totais Pagos: ${formatarMoeda(jurosTotais > 0 ? jurosTotais : 0)}`;
 
-            } else if (valorEntrada === valorTotal) {
-                 resultText += `Pagamento à vista ou entrada cobre o valor total.\n`;
-                 resultText += `Custo Total Geral: ${formatarMoeda(valorTotal)}`;
-            } else if (valorFinanciado === 0 && valorEntrada < valorTotal) {
-                 resultText += `Valor financiado é zero, mas entrada não cobre o total. Verifique os valores.\n`;
-            } else {
-                 resultText += `Não há financiamento a calcular (Valor Financiado = ${formatarMoeda(valorFinanciado)}).`;
-                 if (valorEntrada > 0 && !entradaParcelada) {
-                     resultText += `\nEntrada Paga: ${formatarMoeda(valorEntrada)}`;
+            function compararImoveis() {
+                clearError(errorMessageDiv);
+                resultsDiv.style.display = 'none'; // Hide results initially
+                results1Div.innerHTML = ''; // Clear previous comparison
+                results2Div.innerHTML = '';
+
+                let data = [{}, {}]; // Array to hold data for property 1 and 2
+                let hasError = false;
+
+                // Read and validate data for both properties
+                for (let i = 0; i < 2; i++) {
+                    const propNum = i + 1;
+                    const currentInputs = inputs[propNum];
+
+                    data[i].nome = currentInputs.nome.value.trim() || `Imóvel ${propNum}`; // Default name
+                    data[i].preco = parseFloatInput(currentInputs.preco.value, `Preço Imóvel ${propNum}`, errorMessageDiv.id);
+                    data[i].area = parseFloatInput(currentInputs.area.value, `Área Imóvel ${propNum}`, errorMessageDiv.id);
+                    data[i].quartos = parseIntInput(currentInputs.quartos.value, `Quartos Imóvel ${propNum}`, errorMessageDiv.id, true); // Allow 0
+                    data[i].banheiros = parseIntInput(currentInputs.banheiros.value, `Banheiros Imóvel ${propNum}`, errorMessageDiv.id, true); // Allow 0
+                    data[i].vagas = parseIntInput(currentInputs.vagas.value, `Vagas Imóvel ${propNum}`, errorMessageDiv.id, true); // Allow 0
+                    data[i].condominio = parseFloatInput(currentInputs.condominio.value || '0', `Condomínio Imóvel ${propNum}`, errorMessageDiv.id); // Default to 0 if empty
+                    data[i].iptu = parseFloatInput(currentInputs.iptu.value || '0', `IPTU Imóvel ${propNum}`, errorMessageDiv.id); // Default to 0 if empty
+                    data[i].outros = currentInputs.outros.value.trim();
+
+                    // Check for null values (errors during parsing)
+                    if (Object.values(data[i]).some(val => val === null)) {
+                        hasError = true;
+                        // Error message already displayed by parsing functions
+                    }
+
+                    // Calculate price per m²
+                    if (data[i].preco !== null && data[i].area !== null && data[i].area > 0) {
+                        data[i].precoM2 = data[i].preco / data[i].area;
+                    } else {
+                        data[i].precoM2 = null; // Cannot calculate
+                    }
+                }
+
+                if (hasError) return; // Stop if any input error occurred
+
+                // --- Generate Comparison HTML ---
+                let html1 = `<h4>${data[0].nome}</h4>`;
+                let html2 = `<h4>${data[1].nome}</h4>`;
+
+                // Function to add a comparison row with optional highlighting
+                function addRow(label, value1, value2, formatFunc = null, highlightLower = false, highlightHigher = false) {
+                    let displayValue1 = value1;
+                    let displayValue2 = value2;
+                    let class1 = '';
+                    let class2 = '';
+
+                    if (formatFunc) {
+                        displayValue1 = formatFunc(value1);
+                        displayValue2 = formatFunc(value2);
+                    }
+
+                    // Ensure values are numbers for comparison, handle nulls
+                    const num1 = typeof value1 === 'number' ? value1 : -Infinity;
+                    const num2 = typeof value2 === 'number' ? value2 : -Infinity;
+
+                    if (value1 !== null && value2 !== null && num1 !== num2) { // Only highlight if different and not null
+                         if (highlightLower && num1 < num2) class1 = 'highlight';
+                         if (highlightLower && num2 < num1) class2 = 'highlight';
+                         if (highlightHigher && num1 > num2) class1 = 'highlight';
+                         if (highlightHigher && num2 > num1) class2 = 'highlight';
+                    }
+
+
+                    html1 += `<p><strong>${label}:</strong> <span class="${class1}">${displayValue1 ?? 'N/A'}</span></p>`;
+                    html2 += `<p><strong>${label}:</strong> <span class="${class2}">${displayValue2 ?? 'N/A'}</span></p>`;
+                }
+
+                addRow('Preço', data[0].preco, data[1].preco, formatarMoeda, true); // Highlight lower price
+                addRow('Área (m²)', data[0].area, data[1].area, (v) => formatarMoeda(v, false), false, true); // Highlight higher area
+                addRow('Preço/m²', data[0].precoM2, data[1].precoM2, formatarMoeda, true); // Highlight lower price/m²
+                addRow('Quartos', data[0].quartos, data[1].quartos, null, false, true); // Highlight more bedrooms
+                addRow('Banheiros', data[0].banheiros, data[1].banheiros, null, false, true); // Highlight more bathrooms
+                addRow('Vagas Garagem', data[0].vagas, data[1].vagas, null, false, true); // Highlight more parking
+                addRow('Condomínio (R$)', data[0].condominio, data[1].condominio, formatarMoeda, true); // Highlight lower condo fee
+                addRow('IPTU Anual (R$)', data[0].iptu, data[1].iptu, formatarMoeda, true); // Highlight lower IPTU
+                addRow('Outros', data[0].outros || '-', data[1].outros || '-'); // No formatting/highlighting for text
+
+                results1Div.innerHTML = html1;
+                results2Div.innerHTML = html2;
+                resultsDiv.style.display = 'block'; // Show results area
+                clearError(errorMessageDiv);
+            }
+
+
+             function limparCampos() {
+                 for (let i = 1; i <= 2; i++) {
+                     Object.values(inputs[i]).forEach(input => input.value = '');
                  }
-            }
+                 resultsDiv.style.display = 'none';
+                 results1Div.innerHTML = '';
+                 results2Div.innerHTML = '';
+                 clearError(errorMessageDiv);
+             }
 
+             if (compareButton) compareButton.addEventListener('click', compararImoveis);
+             if (clearButton) clearButton.addEventListener('click', limparCampos);
 
-            resultsDiv.innerText = resultText.trim(); // Remove trailing whitespace
-            resultsDiv.style.display = 'block'; // Show results area
-            errorMessageDiv.innerText = ''; // Clear errors on success
-            errorMessageDiv.style.display = 'none';
-
-        }
-
-        // Function to clear all input fields and results
-        function limparCampos() {
-            valorTotalInput.value = '';
-            valorEntradaInput.value = '';
-            taxaJurosValorInput.value = '';
-            document.getElementById('taxaAnual').checked = true; // Reset radio
-            numParcelasFinanciamentoInput.value = '';
-            entradaParceladaCheckbox.checked = false;
-            // numParcelasEntradaInput.value = ''; // Already cleared by toggleEntradaParceladaOptions
-            // reduzirPrazoCheckbox.checked = false; // Already cleared by toggleEntradaParceladaOptions
-
-            toggleEntradaParceladaOptions(); // Hide the optional fields and clear/disable them
-
-            resultsDiv.innerText = '';
-            resultsDiv.style.display = 'none'; // Hide results area
-            errorMessageDiv.innerText = '';
-            errorMessageDiv.style.display = 'none'; // Hide error area
-        }
-
-        // Add event listeners
-        if (entradaParceladaCheckbox) {
-            entradaParceladaCheckbox.addEventListener('change', toggleEntradaParceladaOptions);
-        }
-        if (calculateButton) {
-            calculateButton.addEventListener('click', calcularFinanciamento);
-        }
-        if (clearButton) {
-            clearButton.addEventListener('click', limparCampos);
-        }
-
-        // Initial state setup for the calculator options
-        toggleEntradaParceladaOptions();
-        // Initial clear (optional, good practice)
-        // limparCampos();
+        })(); // IIFE
 
     </script>
 
